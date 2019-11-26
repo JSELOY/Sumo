@@ -163,7 +163,7 @@ void move_robo(int dir, int ace)
     offSetDirecao = map(analogRead(CORRECAO_DIRECAO), 0, 1023, SERVO_MIN, SERVO_MAX);
     offSetAceleracao = map(analogRead(CORRECAO_ACELERACAO), 0, 1023,SERVO_MIN, SERVO_MAX);
     
-//    if(!bloqueio)
+    if(!bloqueio)
     {
         direcacao.write(tempDir + offSetDirecao);
         acelerador.write(tempAcel + offSetAceleracao);
