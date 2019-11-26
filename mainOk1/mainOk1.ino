@@ -1,15 +1,15 @@
 #include <Servo.h>
 
 //PIN-OUT
-#define CORRECAO_DIRECAO    A11
-#define CORRECAO_ACELERACAO A15
+#define CORRECAO_ESQUERDO   11
+#define CORRECAO_DIREITO    15
 
-#define ACCEL_X             A8
-#define ACCEL_Y             A9
-#define ACCEL_Z             A10
+#define ACCEL_X             8
+#define ACCEL_Y             9
+#define ACCEL_Z             10
 
-#define DIRECAO             12
-#define ACELERACAO          13
+#define M_DIREITO           12
+#define M_ESQUERDO          13
 
 #define SELF_TEST_PIN       46        
 #define SLAVE_SELECT_PIN    50    
@@ -36,8 +36,8 @@
 #define TEMPO_BLOQUEIO      7
 
 //Instances
-Servo acelerador;
-Servo direcacao;
+Servo MotorDireito;
+Servo MotorEsquerdo;
 
 //Variables
 int pos = 0;    
@@ -52,15 +52,15 @@ int bloqueio = 1;
 int xMin,yMin=1023;
 int x,y,xMax,yMax=0;
 
-void move_robo(int dir, int ace);
+void move_robo(int motorDireito, int motorEsquerdo,int bloqueio);
 void exibeControleMotores();
 void exibeSensores();
 void testaBordas();
 
 void setup() 
 {
-  direcacao.attach(DIRECAO); //Direção
-  acelerador.attach(ACELERACAO); //Aceleração
+  MotorEsquerdo.attach(M_ESQUERDO);
+  MotorDireito.attach(M_DIREITO);
   Serial.begin(9600);
 
   pinMode(LED_BUILTIN, OUTPUT);
@@ -152,29 +152,25 @@ void loop()
     exibeControleMotores();
 }
 
-void move_robo(int dir, int ace)
+void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
 {
-    int offSetDirecao = 0;
-    int offSetAceleracao = 0;
+    int correcaoEsq,correcaoDir;
+    int posicaoEsq,posicaoDir;
 
-    int tempDir = map(dir,-90,90, SERVO_MIN, SERVO_MAX);
-    int tempAcel = map(ace,-100,100,SERVO_MIN, SERVO_MAX);
-    
-    offSetDirecao = map(analogRead(CORRECAO_DIRECAO), 0, 1023, SERVO_MIN, SERVO_MAX);
-    offSetAceleracao = map(analogRead(CORRECAO_ACELERACAO), 0, 1023,SERVO_MIN, SERVO_MAX);
-    
-    if(!bloqueio)
+    correcaoEsq = map(analogRead(CORRECAO_ESQUERDO), 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    correcaoDir = map(analogRead(CORRECAO_DIREITO), 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+
+    posicaoEsq = map(motorEsquerdo, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    posicaoDir = map(motorDireito, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+
+    if(bloqueio)
     {
-        direcacao.write(tempDir + offSetDirecao);
-        acelerador.write(tempAcel + offSetAceleracao);
-//        direcacao.write(tempDir);
-//        acelerador.write(tempAcel);
-    }    
-//    else
-//    {
-//        direcacao.write(offSetDirecao);
-//        acelerador.write(offSetAceleracao);      
-//    }
+        posicaoEsq = map(0, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+        posicaoDir = map(0, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    }
+
+    MotorDireito.write(posicaoDir + correcaoDir);
+    MotorEsquerdo.write(posicaoEsq + correcaoEsq);
 }
 
 void testaBordas()
@@ -224,7 +220,7 @@ void exibeSensores()
 
 void teste(){
     val = analogRead(potpin);            // reads the value of the potentiometer (value between 0 and 1023)
-  val = map(val, 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
-  myservo.write(val);                  // sets the servo position according to the scaled value
-  delay(15);                           // waits for the servo to get there
+    val = map(val, 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    myservo.write(val);                  // sets the servo position according to the scaled value
+    delay(15);                           // waits for the servo to get there
 }
