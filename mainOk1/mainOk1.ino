@@ -113,7 +113,7 @@ void f1()
   if(tempoTotal > TEMPO_LUTA)
   {
       bloqueio = 1;
-      move_robo(0,0);
+//      move_robo(0,0);
       digitalWrite(LED_BUILTIN, HIGH);
   }
   else
@@ -127,29 +127,17 @@ void loop()
     if(digitalRead(S_FRONTAL) == 0)
     {
       digitalWrite(LED_BUILTIN, HIGH);
-      valDirecao *= -1;
-      valAceleracao=50;
-      move_robo(0,valAceleracao);
+      move_robo(50, 50, 0);
     }
     else
     {
-      digitalWrite(LED_BUILTIN, LOW);
-        if(girando)
-        {
-//          move_robo(valDirecao,valAceleracao);
-        }   
-        else
-        {
-//          move_robo(0,valAceleracao);  
-        }
+       digitalWrite(LED_BUILTIN, LOW);
+       move_robo(-30, 30, 0);   
     }
       
-//    x= analogRead(ACCEL_X);
-//    y= analogRead(ACCEL_Y);
-
 //    testaBordas();
 //    exibeSensores();
-    exibeControleMotores();
+//    exibeControleMotores();
 }
 
 void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
@@ -216,11 +204,4 @@ void exibeSensores()
     Serial.print("\t");
     Serial.print(digitalRead(S_TRASEIRO_DIR));
     Serial.println();
-}
-
-void teste(){
-    val = analogRead(potpin);            // reads the value of the potentiometer (value between 0 and 1023)
-    val = map(val, 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
-    myservo.write(val);                  // sets the servo position according to the scaled value
-    delay(15);                           // waits for the servo to get there
 }
