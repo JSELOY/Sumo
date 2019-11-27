@@ -61,7 +61,7 @@ void setup()
 {
   MotorEsquerdo.attach(M_ESQUERDO);
   MotorDireito.attach(M_DIREITO);
-  Serial.begin(9600);
+//  Serial.begin(9600);
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -127,7 +127,7 @@ void loop()
     if(digitalRead(S_FRONTAL) == 0)
     {
       digitalWrite(LED_BUILTIN, HIGH);
-      move_robo(50, 50, 0);
+      move_robo(0, 0, 0);
     }
     else
     {
@@ -159,6 +159,7 @@ void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
 
     MotorDireito.write(posicaoDir + correcaoDir);
     MotorEsquerdo.write(posicaoEsq + correcaoEsq);
+    delay(15);
 }
 
 void testaBordas()
@@ -183,14 +184,6 @@ void testaBordas()
             bloqueiaSensor = 1;
         }
     }
-}
-
-void exibeControleMotores()
-{
-    Serial.print(valAceleracao);
-    Serial.print("\t");
-    Serial.print(valDirecao);
-    Serial.println();
 }
 
 
