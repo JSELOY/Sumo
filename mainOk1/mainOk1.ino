@@ -130,8 +130,8 @@ void loop()
 
     if(digitalRead(S_FRONTAL) == 0)
     {
-      motorDireito = 0;
-      motorEsquerdo = 0;
+      motorDireito =50;
+      motorEsquerdo =50;
     }
     else
     {
