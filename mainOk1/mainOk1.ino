@@ -126,12 +126,12 @@ void loop()
 {  
     if(digitalRead(S_FRONTAL) == 0)
     {
-      digitalWrite(LED_BUILTIN, HIGH);
-      move_robo(0, 0, 0);
+     // digitalWrite(LED_BUILTIN, HIGH);
+      move_robo(50, 50, 0);
     }
     else
     {
-       digitalWrite(LED_BUILTIN, LOW);
+    //   digitalWrite(LED_BUILTIN, LOW);
        move_robo(-50, 30, 0);   
     }
       
@@ -155,7 +155,7 @@ void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
     if (posicaoEsq <-100) posicaoEsq = -100;
 
     if (posicaoDir > 100) posicaoDir = 100;
-    if (posicaoDir <-100) posicaoDir = -100
+    if (posicaoDir <-100) posicaoDir = -100;
 
     if(!bloqueio)
     {
