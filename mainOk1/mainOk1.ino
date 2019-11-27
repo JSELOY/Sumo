@@ -148,18 +148,28 @@ void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
     correcaoEsq = map(analogRead(CORRECAO_ESQUERDO), 0, 1023, -100, 100);     // scale it to use it with the servo (value between 0 and 180)
     correcaoDir = map(analogRead(CORRECAO_DIREITO), 0, 1023, -100, 100);     // scale it to use it with the servo (value between 0 and 180)
 
-    posicaoEsq = map(motorEsquerdo, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
-    posicaoDir = map(motorDireito, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    posicaoEsq = motorEsquerdo + correcaoEsq;
+    posicaoDir = motorDireito + correcaoDir;
 
-    if(bloqueio)
+    if (posicaoEsq > 100) posicaoEsq = 100;
+    if (posicaoEsq <-100) posicaoEsq = -100;
+
+    if (posicaoDir > 100) posicaoDir = 100;
+    if (posicaoDir <-100) posicaoDir = -100
+
+    if(!bloqueio)
+    {
+        posicaoEsq = map(posicaoEsq, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+        posicaoDir = map(posicaoDir, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+    }else
     {
         posicaoEsq = map(0, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
         posicaoDir = map(0, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
     }
 
-    MotorDireito.write(posicaoDir - correcaoDir);
-    MotorEsquerdo.write(posicaoEsq - correcaoEsq);
-    delay(15);
+    MotorDireito.write(posicaoDir);
+    MotorEsquerdo.write(posicaoEsq);
+    delay(10);
 }
 
 void testaBordas()
