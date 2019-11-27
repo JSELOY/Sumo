@@ -130,25 +130,13 @@ void loop()
 
     if(digitalRead(S_FRONTAL) == 0)
     {
-<<<<<<< HEAD
-     // digitalWrite(LED_BUILTIN, HIGH);
-      move_robo(50, 50, 0);
-    }
-    else
-    {
-    //   digitalWrite(LED_BUILTIN, LOW);
-       move_robo(-50, 30, 0);   
-=======
-      digitalWrite(LED_BUILTIN, HIGH);
       motorDireito = 0;
       motorEsquerdo = 0;
     }
     else
     {
-       digitalWrite(LED_BUILTIN, LOW);
        motorDireito = -50;
        motorEsquerdo = 30;
->>>>>>> 12a87ccdcf30d22157a0c2555d9447ece0546269
     }
     move_robo(motorDireito, motorEsquerdo, bloqueio);
 //    testaBordas();
