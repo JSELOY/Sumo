@@ -8,8 +8,8 @@
 #define ACCEL_Y             9
 #define ACCEL_Z             10
 
-#define M_DIREITO           12
-#define M_ESQUERDO          13
+#define M_DIREITO           13
+#define M_ESQUERDO          12
 
 #define SELF_TEST_PIN       46        
 #define SLAVE_SELECT_PIN    50    
@@ -132,7 +132,7 @@ void loop()
     else
     {
        digitalWrite(LED_BUILTIN, LOW);
-       move_robo(-30, 30, 0);   
+       move_robo(-50, 30, 0);   
     }
       
 //    testaBordas();
