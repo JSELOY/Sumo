@@ -157,8 +157,8 @@ void move_robo(int motorDireito, int motorEsquerdo,int bloqueio)
         posicaoDir = map(0, -100, 100, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
     }
 
-    MotorDireito.write(posicaoDir + correcaoDir);
-    MotorEsquerdo.write(posicaoEsq + correcaoEsq);
+    MotorDireito.write(posicaoDir);
+    MotorEsquerdo.write(posicaoEsq);
     delay(15);
 }
 
