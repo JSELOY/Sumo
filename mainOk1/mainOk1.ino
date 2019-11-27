@@ -123,18 +123,24 @@ void f1()
 }
 
 void loop() 
-{  
+{
+    static int motorDireito = 0;
+    static int motorEsquerdo = 0;
+    static int bloqueio = 0;
+
     if(digitalRead(S_FRONTAL) == 0)
     {
       digitalWrite(LED_BUILTIN, HIGH);
-      move_robo(0, 0, 0);
+      motorDireito = 0;
+      motorEsquerdo = 0;
     }
     else
     {
        digitalWrite(LED_BUILTIN, LOW);
-       move_robo(-50, 30, 0);   
+       motorDireito = -50;
+       motorEsquerdo = 30;
     }
-      
+    move_robo(motorDireito, motorEsquerdo, bloqueio);
 //    testaBordas();
 //    exibeSensores();
 //    exibeControleMotores();
