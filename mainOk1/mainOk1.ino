@@ -134,26 +134,24 @@ void loop()
       motorEsquerdo =50;
     }
     else
-    {
-       motorDireito = -50;
-       motorEsquerdo = 30;
-    }
-    
-    if(digitalRead(S_TRASEIRO) == 0)
-    {
-      motorDireito =-50;
-      motorEsquerdo =-50;
-    }
-    else
-    {
-       motorDireito = -50;
-       motorEsquerdo = 30;
-    }
+   {
+      motorDireito = -50;
+      motorEsquerdo = 50;
+   }
+
+    //if(digitalRead(S_TRASEIRO) == 0)
+   // {
+   //   motorDireito =-50;
+   //   motorEsquerdo =-50;
+   // }
+//    else
+   // {
+   //   motorDireito = -50;
+   //   motorEsquerdo = 30;
+  //  }
     
     move_robo(motorDireito, motorEsquerdo, bloqueio);
     testaBordas(bloqueio);
-
-
     
 //    exibeSensores();
 //    exibeControleMotores();
