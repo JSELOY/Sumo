@@ -109,42 +109,21 @@ void loop()
       motorDireito =80;
       motorEsquerdo =80;
     }
-     else if(digitalRead(S_TRASEIRO) == 0)
+     else if(digitalRead(S_TRASEIRO) == 1)
     {
      motorDireito =-50;
      motorEsquerdo =-50;
     }
     else
    {
-      motorDireito = -30;
-      motorEsquerdo = 50;
+      motorDireito = 30;
+      motorEsquerdo = 30;
    }
 
    move_robo(motorDireito, motorEsquerdo, bloqueio);
    testaBordas(bloqueio);
   }
 
-//void loop2()
-//{
-//    static int motorDireito = 0;
-//    static int motorEsquerdo = 0;
-//    static int bloqueio = 0;
-//    
-//    if(digitalRead(S_TRASEIRO) == 0)
-//    {
-//     motorDireito =-50;
-//     motorEsquerdo =-50;
-//    }
-//    else
-//    {
-//     motorDireito = -50;
-//     motorEsquerdo = 30;
-//     }
-
-//     move_robo(motorDireito, motorEsquerdo, bloqueio);
-//     testaBordas(bloqueio);
-//
-//}
     
     
 //    exibeSensores();
@@ -193,7 +172,7 @@ void testaBordas(int bloqueio)
     if((digitalRead(S_TRASEIRO_ESQ) == SENSOR_BORDA_ATIVO)||(digitalRead(S_TRASEIRO_DIR) == SENSOR_BORDA_ATIVO))
     {
       move_robo(50, 50, bloqueio);
-      delay(50);    
+      delay(100);    
     }
 }
 
