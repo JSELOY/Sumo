@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Timer.h>
 
 //PIN-OUT
 #define CORRECAO_ESQUERDO   11
@@ -39,6 +40,8 @@
 Servo MotorDireito;
 Servo MotorEsquerdo;
 
+Timer t;
+
 //Variables
 int pos = 0;    
 int valDirecao = 30;
@@ -57,11 +60,20 @@ void exibeControleMotores();
 void exibeSensores();
 void testaBordas(int bloqueio);
 
+void trataTimer()
+{
+  static int tempoTotal=0;
+  tempoTotal++;
+  if(tempoTotal > TEMPO_LUTA)
+  {
+      bloqueio = 1;
+  }
+}
+
 void setup() 
 {
   MotorEsquerdo.attach(M_ESQUERDO);
   MotorDireito.attach(M_DIREITO);
-//  Serial.begin(9600);
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -81,49 +93,13 @@ void setup()
   digitalWrite(SLAVE_SELECT_PIN, HIGH);
   digitalWrite(G_SELECT_PIN, LOW);
 
-//  noInterrupts();           // disable all interrupts
-//  TCCR1A = 0;
-//  TCCR1B = 0;
-//  TCNT1  = 0;
-//
-//  OCR1A = 31250;            // compare match register 16MHz/256/2Hz
-//  TCCR1B |= (1 << WGM12);   // CTC mode
-//  TCCR1B |= (1 << CS12);    // 256 prescaler 
-//  TIMSK1 |= (1 << OCIE3A);  // enable timer compare interrupt
-//  
-//  interrupts();             // enable all interrupts
-}
-
-//ISR(TIMER1_COMPA_vect)      // timer compare interrupt service routine
-void f1()
-{
-  tempoTotal++;
-  bloqueiaSensor =0;
-
-  if(tempoTotal > TEMPO_BLOQUEIO)
-  {
-      bloqueio = 0;
-  }
-
-  if((tempoTotal%3) == 0)
-  {
-    girando ^= 1;
-  }
-
-  if(tempoTotal > TEMPO_LUTA)
-  {
-      bloqueio = 1;
-//      move_robo(0,0);
-      digitalWrite(LED_BUILTIN, HIGH);
-  }
-  else
-  {
-      digitalWrite(LED_BUILTIN, digitalRead(LED_BUILTIN) ^ 1);   // toggle LED pin 
-  }
+  int timerPrincipal = t.every(1000, trataTimer,0);
 }
 
 void loop() 
   {
+    t.update();
+    
     static int motorDireito = 0;
     static int motorEsquerdo = 0;
     static int bloqueio = 0;
